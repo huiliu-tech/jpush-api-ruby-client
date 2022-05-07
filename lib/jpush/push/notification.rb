@@ -14,7 +14,8 @@ module JPush
 
       def set_android(alert: , title: nil, builder_id: nil, channel_id: nil,
         priority: nil, category: nil, style: nil, alert_type: nil, big_text: nil, inbox: nil, big_pic_path: nil, extras: nil,
-        large_icon: nil, intent: nil)
+        large_icon: nil, small_icon_uri: nil, intent: nil, uri_activity: nil, uri_action: nil,  badge_add_num: nil,
+                      badge_class: nil, sound: nil, show_begin_time: nil, show_end_time: nil, display_foreground: nil)
         @android = {
           alert: alert,
           title: title,
@@ -29,12 +30,21 @@ module JPush
           big_pic_path: big_pic_path,
           extras: extras,
           large_icon: large_icon,
-          intent: intent
+          small_icon_uri: small_icon_uri,
+          intent: intent,
+          uri_activity: uri_activity,
+          uri_action: uri_action,
+          badge_add_num: badge_add_num,
+          badge_class: badge_class,
+          sound: sound,
+          show_begin_time: show_begin_time,
+          show_end_time: show_end_time,
+          display_foreground: display_foreground
         }.select { |_, value| !value.nil? }
         self
       end
 
-      def set_ios(alert: , sound: nil, badge: '+1', available: nil, category:nil, extras: nil, contentavailable: nil, mutablecontent: nil, thread: nil)
+      def set_ios(alert: , sound: nil, badge: '+1', available: nil, category:nil, extras: nil, contentavailable: nil, mutablecontent: nil, thread: nil, interruption: nil)
         contentavailable = available if contentavailable.nil?
         contentavailable = nil unless contentavailable.is_a? TrueClass
         mutablecontent = nil unless mutablecontent.is_a? TrueClass
@@ -46,7 +56,8 @@ module JPush
           'mutable-content': mutablecontent,
           category: category,
           extras: extras,
-          'thread-id': thread
+          'thread-id': thread,
+          'interruption-level': interruption
         }.select { |_, value| !value.nil? }
         self
       end
